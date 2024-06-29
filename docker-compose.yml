@@ -1,0 +1,25 @@
+version: '3.7'
+services:
+  platform_challenge_db:
+    image: postgres:13-alpine3.14
+    container_name: platform_challenge_db
+    ports:
+      - '54323:5432'
+    environment:
+      POSTGRES_DB: platform_challenge_db
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+    volumes:
+      - platform_challenge_db:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  platform_challenge_adminer:
+    image: adminer
+    container_name: 'platform_challenge_adminer'
+    restart: unless-stopped
+    depends_on:
+      - platform_challenge_db
+    ports:
+      - 8881:8080
+volumes:
+  platform_challenge_db:
